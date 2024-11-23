@@ -12,6 +12,14 @@ interface AuthTabsProps {
 const AuthTabs: React.FC<AuthTabsProps> = ({ defaultTab }) => {
   const [activeTab, setActiveTab] = useState<"register" | "login">(defaultTab);
 
+  const handleGoogleLogin = () => {
+    fetch("http://localhost:8000/auth/google/authorize")
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.href = data.authorization_url;
+      });
+  };
+
   useEffect(() => {
     setActiveTab(defaultTab); // Update the active tab whenever the defaultTab prop changes
   }, [defaultTab]);
@@ -29,7 +37,11 @@ const AuthTabs: React.FC<AuthTabsProps> = ({ defaultTab }) => {
         <TabsTrigger value="login">Login</TabsTrigger>
       </TabsList>
       <TabsContent value="register" className="space-y-4">
-        <Button className="w-full justify-start" variant="outline">
+        <Button
+          className="w-full justify-start"
+          variant="outline"
+          onClick={handleGoogleLogin}
+        >
           <svg
             className="w-5 h-5 mr-2"
             viewBox="0 0 24 24"
@@ -75,7 +87,11 @@ const AuthTabs: React.FC<AuthTabsProps> = ({ defaultTab }) => {
         </Button>
       </TabsContent>
       <TabsContent value="login" className="space-y-4">
-        <Button className="w-full justify-start" variant="outline">
+        <Button
+          className="w-full justify-start"
+          variant="outline"
+          onClick={handleGoogleLogin}
+        >
           <svg
             className="w-5 h-5 mr-2"
             viewBox="0 0 24 24"

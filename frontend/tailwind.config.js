@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+// Import the required plugin for ES modules
+import tailwindcssAnimate from 'tailwindcss-animate';
+
+export default {
 	darkMode: ["class"],
 	content: [
 	  './index.html',
@@ -8,7 +12,7 @@ module.exports = {
 	],
 	theme: {
 	  container: {
-		center: true,  // Removed the quotes around `true`
+		center: true,
 		padding: '2rem',
 		screens: {
 		  '2xl': '1400px',
@@ -16,14 +20,13 @@ module.exports = {
 	  },
 	  extend: {
 		colors: {
-		  // Custom color palette (replace this with your actual custom colors)
 		  primary: {
-			DEFAULT: '#4A90E2',  // Replace with your primary color
-			dark: '#003366',     // Dark variant of the primary color
-			light: '#B3D4FC',    // Light variant of the primary color
+			DEFAULT: '#4A90E2',
+			dark: '#003366',
+			light: '#B3D4FC',
 		  },
 		  secondary: {
-			DEFAULT: '#50E3C2',  // Replace with your secondary color
+			DEFAULT: '#50E3C2',
 			dark: '#00796B',
 			light: '#B2DFDB',
 		  },
@@ -33,16 +36,15 @@ module.exports = {
 			dark: '#616161',
 		  },
 		  accent: {
-			DEFAULT: '#FF4081',  // Example accent color
+			DEFAULT: '#FF4081',
 		  },
 		},
 		borderRadius: {
-		  lg: 'var(--radius)',    // Using CSS variables or fixed values
+		  lg: 'var(--radius)',
 		  md: 'calc(var(--radius) - 2px)',
 		  sm: 'calc(var(--radius) - 4px)',
 		},
 		fontFamily: {
-		  // Custom font family (replace "var(--font-sans)" with your font variables or values)
 		  sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
 		  serif: ['Merriweather', 'serif'],
 		},
@@ -62,5 +64,6 @@ module.exports = {
 		},
 	  },
 	},
-	plugins: [require('tailwindcss-animate')],
-  };
+	// Use the imported plugin
+	plugins: [tailwindcssAnimate],
+};

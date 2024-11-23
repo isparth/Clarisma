@@ -1,14 +1,14 @@
-from pydantic import BaseModel
-from typing import List
+import uuid
+from fastapi_users import schemas
 
-class ItemBase(BaseModel):
-    name: str
 
-class ItemCreate(ItemBase):
+class UserRead(schemas.BaseUser[uuid.UUID]):
     pass
 
-class Item(ItemBase):
-    id: int  # Assuming your Item model has an ID field
 
-    class Config:
-        from_attributes = True  # Required for from_orm to work in Pydantic v2
+class UserCreate(schemas.BaseUserCreate):
+    pass
+
+
+class UserUpdate(schemas.BaseUserUpdate):
+    pass

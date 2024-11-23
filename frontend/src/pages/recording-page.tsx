@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import axios from "axios";
 
 // Define the structure of a Question object
 interface Question {
@@ -13,10 +14,6 @@ interface Question {
 // Array of questions with their respective time limits
 const questions: Question[] = [
   { text: "How do you stay updated with industry trends?", time: 60 },
-  {
-    text: "Describe a project where you had to learn a new skill quickly.",
-    time: 75,
-  },
 ];
 
 // Main component for the recording page
@@ -32,6 +29,9 @@ function RecordingPageComponent() {
   const [responses, setResponses] = useState<(Blob | null)[]>(
     new Array(questions.length).fill(null) // Array to store responses for each question
   );
+
+  const [processing, setProcessing] = useState(false);
+  const [landmarks, setLandmarks] = useState<any[]>([]);
 
   // Effect hook to handle the countdown timer
   useEffect(() => {
@@ -155,11 +155,24 @@ function RecordingPageComponent() {
     }
   };
 
-  // Function to submit all responses
   const handleSubmit = () => {
-    // In a real application, you would send all responses to your server here
-    console.log("Submitting all responses:", responses);
-    // You might want to reset the state or navigate to a new page after submission
+    const formData = new FormData();
+    if (responses[0] !== null) {
+      formData.append("file", responses[0]); // Append only the first file
+      //http://localhost:8000
+      fetch("http://127.0.0.1:8000/process_video", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response data
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   // Check if all questions have been answered
