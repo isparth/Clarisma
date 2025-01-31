@@ -3,8 +3,8 @@ from app.db import create_db_and_tables
 from app.routers.auth import auth_router
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.MediaPipe import process_video_file
-from fastapi import FastAPI, UploadFile, File
-
+from fastapi import FastAPI, UploadFile, File, Query, Form
+import ffmpeg
 
 app = FastAPI()
 
@@ -26,6 +26,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
+
     await create_db_and_tables()
 
 app.include_router(auth_router)
@@ -36,6 +37,9 @@ def read_root():
 
 
 @app.post("/process_video")
-async def process_video(file: UploadFile = File(...)):
-    
-    return process_video_file(file)
+async def process_video(
+    question: str = Form(...),  # Parse `question` from form data
+    file: UploadFile = File(...)  # File upload
+):
+    print(question)
+    return await process_video_file(question,file)

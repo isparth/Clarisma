@@ -13,7 +13,7 @@ interface Question {
 
 // Array of questions with their respective time limits
 const questions: Question[] = [
-  { text: "How do you stay updated with industry trends?", time: 60 },
+  { text: "How do you stay updated with industry trends?", time: 90 },
 ];
 
 // Main component for the recording page
@@ -98,7 +98,7 @@ function RecordingPageComponent() {
   // Function to save the recorded response
   const handleSaveResponse = () => {
     // Create a Blob from the recorded chunks
-    const blob = new Blob(recordedChunks, { type: "video/webm" });
+    const blob = new Blob(recordedChunks, { type: "video/mp4" });
     // Save the response in the responses array
     setResponses((prev) => {
       const newResponses = [...prev];
@@ -159,6 +159,7 @@ function RecordingPageComponent() {
     const formData = new FormData();
     if (responses[0] !== null) {
       formData.append("file", responses[0]); // Append only the first file
+      formData.append("question", questions[0].text); // Append the first question
       //http://localhost:8000
       fetch("http://127.0.0.1:8000/process_video", {
         method: "POST",
