@@ -2,26 +2,6 @@ import librosa
 import numpy as np
 
 def compute_speech_features(audio_file, sr=16000, top_db=30):
-    """
-    Computes speech pause-related features from an audio file, while ignoring leading and trailing silence.
-    
-    Features:
-    - Pause Frequency (number of pauses above a minimum duration)
-    - Average Pause Duration (for pauses above the minimum duration)
-    - Medium Pauses (1.5s - 2.5s)
-    - Long Pauses (>2.5s)
-    - Response Duration (total speech duration excluding start & end silence)
-    
-    Parameters:
-    - audio_file: str, path to the audio file.
-    - sr: int, sample rate for loading audio (default 16kHz for speech).
-    - top_db: int, threshold in dB for silence detection.
-    - min_pause_duration: float, minimum pause duration (in seconds) to be counted.
-    
-    Returns:
-    - Dictionary with extracted features.
-    """
-
     min_pause_duration=0.25
     
     # Load the audio file

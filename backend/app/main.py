@@ -77,7 +77,7 @@ async def auth_callback(request: Request):
     request.session["user"] = user_info
     return RedirectResponse(url="http://localhost:5173/questions")
 
-# Protected endpoint: Only accessible if the user is logged in.
+# Protected endpoint
 @app.get("/protected")
 async def protected_route(request: Request):
     user = request.session.get("user")
@@ -88,8 +88,8 @@ async def protected_route(request: Request):
 # Existing endpoint for processing video files.
 @app.post("/process_video")
 async def process_video(
-    question: str = Form(...),  # Extract 'question' from form data
-    file: UploadFile = File(...)  # Accept file uploads
+    question: str = Form(...),  
+    file: UploadFile = File(...) 
 ):
     print(question)
     return await process_video_file(question, file)
