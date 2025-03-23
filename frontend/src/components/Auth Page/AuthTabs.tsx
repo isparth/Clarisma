@@ -1,5 +1,3 @@
-// AuthTabs.tsx
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,16 +10,13 @@ interface AuthTabsProps {
 const AuthTabs: React.FC<AuthTabsProps> = ({ defaultTab }) => {
   const [activeTab, setActiveTab] = useState<"register" | "login">(defaultTab);
 
+  // This function redirects the user to the backend endpoint for Google OAuth.
   const handleGoogleLogin = () => {
-    fetch("http://localhost:8000/auth/google/authorize")
-      .then((response) => response.json())
-      .then((data) => {
-        window.location.href = data.authorization_url;
-      });
+    window.location.href = "http://localhost:8000/auth/login";
   };
 
   useEffect(() => {
-    setActiveTab(defaultTab); // Update the active tab whenever the defaultTab prop changes
+    setActiveTab(defaultTab); // Update the active tab when defaultTab prop changes
   }, [defaultTab]);
 
   return (

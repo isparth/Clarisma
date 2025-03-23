@@ -1,9 +1,8 @@
-"use client";
-
-import React from "react";
+// QuestionSetPageComponent.jsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, PlayCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // This would typically come from a database or API
 const questionSet = {
@@ -13,26 +12,43 @@ const questionSet = {
     {
       id: 1,
       text: "Describe a time when you had to work under pressure to meet a deadline.",
+      time: 90,
     },
     {
       id: 2,
-      text: "How would you value a company that has negative earnings?",
+      text: " Tell me about yourself ?",
+      time: 120,
     },
     {
       id: 3,
-      text: "What are the main differences between commercial and investment banking?",
+      text: "Tell me about a time when you missed an important deadline?",
+      time: 120,
     },
     {
       id: 4,
-      text: "Walk me through the three financial statements and how they are interconnected.",
+      text: "Tell me about a time that you worked well in a team ?",
+      time: 120,
     },
     {
       id: 5,
-      text: "What do you think are the key challenges facing the investment banking industry today?",
+      text: "Tell me about your proudest acheivement?",
+      time: 120,
     },
   ],
 };
+
 function QuestionSetPageComponent() {
+  const navigate = useNavigate();
+
+  // Redirect to Home page with query parameters for question and time
+  const handleStart = (question: { id?: number; text: any; time: any }) => {
+    navigate(
+      `/choice?question=${encodeURIComponent(
+        question.text
+      )}&time=${encodeURIComponent(question.time)}`
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
@@ -40,9 +56,6 @@ function QuestionSetPageComponent() {
           <h1 className="text-3xl font-bold text-[#171B42]">
             {questionSet.name}
           </h1>
-          <Button className="bg-[#171B42] hover:bg-[#2a2f5e] text-white">
-            Practice All <PlayCircle className="ml-2" />
-          </Button>
         </div>
 
         <div className="space-y-4">
@@ -56,7 +69,10 @@ function QuestionSetPageComponent() {
                     </h2>
                     <p className="text-gray-700">{question.text}</p>
                   </div>
-                  <Button className="ml-4 bg-[#171B42] hover:bg-[#2a2f5e] text-white">
+                  <Button
+                    onClick={() => handleStart(question)}
+                    className="ml-4 bg-[#171B42] hover:bg-[#2a2f5e] text-white"
+                  >
                     Start <ArrowRight className="ml-2" />
                   </Button>
                 </div>

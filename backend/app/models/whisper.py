@@ -1,4 +1,5 @@
 from openai import OpenAI
+import re
 
 client = OpenAI(
   api_key="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"
@@ -25,6 +26,17 @@ async def whisper_request(audio_file):
         prompt=whisperPrompt
     )
 
+     # Get the transcribed text
+    text = transcription.text.strip()
+
+    # Count words in the transcription
+    word_count = len(re.findall(r'\b\w+\b', text))
+
+
     # Output the transcription 
     print(transcription.text)
-    return(transcription.text)
+
+    return {
+        "word_count": word_count,
+        "text": text
+    }

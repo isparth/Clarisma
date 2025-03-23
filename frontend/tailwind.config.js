@@ -1,5 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-
 // Import the required plugin for ES modules
 import tailwindcssAnimate from 'tailwindcss-animate';
 

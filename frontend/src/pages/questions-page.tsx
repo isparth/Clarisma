@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowRight, Shuffle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface QuestionPack {
   id: number;
@@ -60,6 +61,7 @@ const questionPacks: QuestionPack[] = [
 ];
 
 const QuestionsPageComponent: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
@@ -123,20 +125,6 @@ const QuestionsPageComponent: React.FC = () => {
 
       {/* Question Packs */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Random Practice Card */}
-        <Card className="bg-[#171B42] text-white">
-          <CardContent className="p-6">
-            <h2 className="text-xl font-semibold mb-4 flex items-center">
-              <Shuffle className="mr-2" /> Random Practice
-            </h2>
-            <p className="mb-4">
-              Practice with a mix of questions from all categories and types.
-            </p>
-            <Button variant="secondary" className="w-full">
-              Start Random Practice <ArrowRight className="ml-2" />
-            </Button>
-          </CardContent>
-        </Card>
         {/* Filtered Question Packs */}
         {filteredPacks.map((pack: QuestionPack) => (
           <Card key={pack.id}>
@@ -151,7 +139,10 @@ const QuestionsPageComponent: React.FC = () => {
                 {" • "}
                 {pack.type}
               </p>
-              <Button className="w-full bg-[#171B42] hover:bg-[#2a2f5e] text-white">
+              <Button
+                onClick={() => navigate("/question-set")}
+                className="w-full bg-[#171B42] hover:bg-[#2a2f5e] text-white"
+              >
                 Start Practice <ArrowRight className="ml-2" />
               </Button>
             </CardContent>
