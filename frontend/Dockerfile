@@ -1,20 +1,14 @@
-# Use an official Node.js image
-FROM node:18-alpine
-
-# Set the working directory
-WORKDIR /src
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Build stage
+FROM node:20-alpine AS build
+WORKDIR /app
 COPY . .
+RUN npm install && npm run build
 
-# Expose the port your application runs on
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "run", "dev"]
+# Serve stage
+FROM nginx:alpine
+# Copy the built files
+COPY --from=build /app/dist /usr/share/nginx/html
+# Copy your custom nginx configuration (make sure nginx.conf exists in the frontend folder)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

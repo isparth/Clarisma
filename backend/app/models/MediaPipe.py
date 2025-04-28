@@ -126,7 +126,7 @@ async def process_video_file(question, file: UploadFile):
     previous_left_wrist = previous_left_index = previous_left_pinky = None
     previous_right_wrist = previous_right_index = previous_right_pinky = None
 
-    # Process video frames using MediaPipe
+    # Process video frames using openCV
     with PoseLandmarker.create_from_options(options) as landmarker:
         while cap.isOpened():
             ret, frame = cap.read()
@@ -199,7 +199,7 @@ async def process_video_file(question, file: UploadFile):
                     # Sum the average distances from both hands
                     total_distance += avg_left_distance + avg_right_distance
 
-                    # --- Update Previous Landmarks for Next Frame ---
+                    # --- Update Previous Landmarks for NExt Frame ---
                     if is_valid(left_wrist):
                         previous_left_wrist = left_wrist
                     if is_valid(left_index):

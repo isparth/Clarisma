@@ -1,0 +1,11 @@
+numpy
+aiofiles==24.1.0
+certifi==2024.12.14
+fastapi==0.115.11
+fer==22.5.1
+joblib==1.4.2
+mediapipe==0.10.18
+opencv_python==4.11.0.86
+pandas==2.2.3
+uvicorn== 0.34.0
+moviepy

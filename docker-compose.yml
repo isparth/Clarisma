@@ -5,41 +5,33 @@ services:
     build:
       context: ./frontend
     container_name: frontend
-    restart: always
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
-      - "5173:5173"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - "3000:80"
+    restart: always
 
   backend:
     build:
       context: ./backend
     container_name: backend
-    restart: always
-    volumes:
-      - ./backend:/app
     ports:
       - "8000:8000"
-    env_file:
-      - ./backend/.env
     depends_on:
-      - db
-
-  db:
-    image: postgres:13-alpine
-    container_name: db
+      - backend-audio
+      - backend-video
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Parth5413p
-      POSTGRES_DB: clarisma
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - "5435:5432"
 
-volumes:
-  postgres_data:
+  backend-audio:
+    build:
+      context: ./backend-audio
+    container_name: backend-audio
+    ports:
+      - "8002:8002"
+    restart: always
+
+  backend-video:
+    build:
+      context: ./backend-video
+    container_name: backend-video
+    ports:
+      - "8003:8003"
+    restart: always

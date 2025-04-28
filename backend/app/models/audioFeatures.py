@@ -27,10 +27,10 @@ def compute_speech_features(audio_file, sr=16000, top_db=30):
             pauses.append(pause_duration)
 
     # Compute pause-based features
-    pause_freq = len(pauses)  # Number of pauses (above the minimum duration)
-    avg_pause = np.mean(pauses) if pauses else 0  # Average pause duration
-    medium_pauses = sum(1 for p in pauses if 1.5 <= p < 2.5)  # Count of medium pauses (1.5s - 2.5s)
-    long_pauses = sum(1 for p in pauses if p >= 2.5)  # Count of long pauses (>2.5s)
+    pause_freq = len(pauses) 
+    avg_pause = np.mean(pauses) if pauses else 0  
+    medium_pauses = sum(1 for p in pauses if 1.5 <= p < 2.5)  
+    long_pauses = sum(1 for p in pauses if p >= 2.5) 
 
     # Return extracted features
     return {
@@ -40,6 +40,3 @@ def compute_speech_features(audio_file, sr=16000, top_db=30):
         'Long_Pauses': long_pauses,
         'Response_Duration': response_duration
     }
-
-# features = compute_speech_features("audio.wav")
-# print(features)

@@ -7,6 +7,10 @@ from app.models.MediaPipe import process_video_file
 
 import os
 from dotenv import load_dotenv
+import requests
+import aiofiles
+import asyncio
+from moviepy.editor import VideoFileClip
 
 # Load environment variables from .env (make sure your .env has GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, REDIRECT_URI, and SECRET_KEY)
 load_dotenv()
@@ -93,3 +97,47 @@ async def process_video(
 ):
     print(question)
     return await process_video_file(question, file)
+
+
+
+# @app.post("/process_video")
+# async def process_video(question: str = Form(...), file: UploadFile = File(...)):
+
+#     video_path = os.path.join("uploads", "temp.mp4")
+#     audio_path = os.path.join("uploads", "temp.wav")
+
+#     # Save uploaded video
+#     async with aiofiles.open(video_path, "wb") as out_file:
+#         content = await file.read()
+#         await out_file.write(content)
+
+#     # Extract audio
+#     clip = VideoFileClip(video_path)
+#     clip.audio.write_audiofile(audio_path)
+
+#     # Prepare requests
+#     async def send_audio():
+#         with open(audio_path, "rb") as f:
+#             return requests.post(
+#                 "http://audio:8002/run-audio",
+#                 files={"file": f},
+#                 data={"question": question}
+#             ).json()
+
+#     async def send_video():
+#         with open(video_path, "rb") as f:
+#             return requests.post(
+#                 "http://video:8003/run-video",
+#                 files={"file": f}
+#             ).json()
+
+#     audio_result, video_result = await asyncio.gather(send_audio(), send_video())
+
+#     # Cleanup
+#     await asyncio.to_thread(os.remove, video_path)
+#     await asyncio.to_thread(os.remove, audio_path)
+
+#     return {
+#         "audio": audio_result,
+#         "video": video_result
+#     }
