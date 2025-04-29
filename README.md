@@ -1,4 +1,3 @@
-AI-Powered Interview Practice Platform
 
 This repository contains two main components:
 
